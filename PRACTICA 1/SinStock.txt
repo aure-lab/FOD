@@ -1,0 +1,6 @@
+ 40  1.0000000000000000E+007 nose
+ 0 10 alto celu wacho
+ down
+ 25614  2.0000000000000000E+001 poco
+ 0 20 uff alto celu
+ elrecelu

@@ -1,0 +1,12 @@
+ 222  2.0000000000000000E+002    xiaomi
+ 10 20  vacio
+   boing
+ 333  3.0000000000000000E+002    samsung
+ 40 20   un re celu
+   nombre re epico
+ 40  1.0000000000000000E+007 nose
+ 0 10 alto celu wacho
+ down
+ 25614  2.0000000000000000E+001 poco
+ 20 20 uff alto celu
+ elrecelu
