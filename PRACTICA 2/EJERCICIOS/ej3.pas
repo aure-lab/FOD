@@ -61,17 +61,17 @@ begin
     minimo(det,rdet,min);
     read(mae,rmae);
     while(min.cod<>valoralto)do begin
-        if(rmae.cod=rdet.cod)then
-            while(rmae.cod=rdet.cod)do begin
+        while((min.cod<>valoralto)and (min.cod<>rmae.cod))do
+            minimo(det,rdet,min);
+        if(min.cod=rmae.cod)then begin
+            while((rmae.cod=rdet.cod)and (min.cod<>rmae.cod))do begin
                 rmae.stock:=rmae.stock-min.cant;
                 minimo(det,rdet,min);
             end;
             seek(mae,filepos(mae)-1);
             write(mae,rmae);
             read(mae,rmae)
-        end
-        else
-            minimo(det,rdet,min);
+        end;
     end;
     close(mae);
     for i:= 1 to 30 do 
