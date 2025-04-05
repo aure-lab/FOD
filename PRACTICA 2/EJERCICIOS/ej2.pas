@@ -38,20 +38,19 @@ begin
     leer(det,rdet);
     read(mae,rmae);
     while(rdet.cod<>valoralto)do begin
-        if(rdet.cod=rmae.cod)then begin
-            while(rdet.cod=rmae.cod)do begin
-                if(rdet.aprobo)then
-                    rmae.final:= rmae.final+1
-                else
-                    rmae.cursada:= rmae.cursada+1;
-                leer(det,rdet);
-            end;
-            seek(mae,filepos(mae)-1);
-            write(mae,rmae);
+        read(mae,rmae);
+        while(rmae.cod<>rdet.cod)do 
             read(mae,rmae);
-        end
-        else
+        while(rdet.cod=rmae.cod)do begin
+            if(rdet.aprobo)then
+                rmae.final:= rmae.final+1
+            else
+                rmae.cursada:= rmae.cursada+1;
             leer(det,rdet);
+        end;
+        seek(mae,filepos(mae)-1);
+        write(mae,rmae);
+        end
     end;
     close(mae);
     close(det);

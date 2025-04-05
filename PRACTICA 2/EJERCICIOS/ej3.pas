@@ -1,99 +1,77 @@
 program ej3;
-const
-    valoralto=9999;
-type
-
-producto = record
-    cod:integer;
-    nom:String;
-    des:String;
-    stock:integer;
-    min:integer;
-    pre:real;
-end;
+const valoralto = 'zzzz';
+type 
 
 info = record
-    cod:integer;
+    nom: String;
     cant:integer;
+    tot:integer;
 end;
 
-maestro = file of producto;
-detalle = file of info;
+encuesta = record
+    nom:String;
+    cod:integer;
+    cant:integer;
+    tot:integer;
+end;
 
-vdet = array [1..30] of detalle;
-vreg = array [1..30] of info;
+detalle = file of encuesta;
+maestro = file of info;
 
-procedure leer (var det:detalle; var rdet:info);
+procedure leer (var det:detalle; var rdet:encuesta);
 begin
     if(not eof(det))then
         read(det,rdet)
     else
-        rdet.cod:=valoralto;
+        rdet.nom:=valoralto;
 end;
 
-procedure minimo (var det:vdet; var rdet: vreg; var min:info);
-var
-    i,j:integer;
-    minimo:integer;
+procedure minimo (var det1,det2:detalle; var rdet1,rdet2,min:encuesta);
 begin
-    codmin:=999;
-    for i:= 1 to 30 do begin
-        if (rdet[i].cod<minimo) then begin
-            codmin:=rdet[i].cod;
-            j:=i;
-        end;
-    end;
-    min:=rdet[j];
-    leer(det[j],rdet[j]);
+    if(rdet1.nom>rdet2.nom)then begin
+        min:=rdet2;
+        leer(det2,rdet2)
+    else 
+    begin
+        min:=rdet1;
+        leer(det1,rdet1);
 end;
 
-procedure actualizarMaestro (var mae:maestro; var rdet:vreg; var det: vdet);
+procedure actualizarMae (var mae:maestro; var det1,det2:detalle);
 var
-    min:info;
-    i:integer;
-    rmae:producto;
+    rmae:info;
+    cant,tot:integer;
+    rdet1,rdet2,min:encuesta;
 begin
     reset(mae);
-    for i:= 1 to 30 do begin
-        reset(det[i]);
-        leer(det[i],rdet[i]);
-    end;
-    minimo(det,rdet,min);
-    read(mae,rmae);
-    while(min.cod<>valoralto)do begin
-        while((min.cod<>valoralto)and (min.cod<>rmae.cod))do
-            minimo(det,rdet,min);
-        if(min.cod=rmae.cod)then begin
-            while((rmae.cod=rdet.cod)and (min.cod<>rmae.cod))do begin
-                rmae.stock:=rmae.stock-min.cant;
-                minimo(det,rdet,min);
-            end;
+    reset(rdet1);
+    reset(rdet2);
+    minimo(det1,det2,rdet1,rdet2,min);
+    while(min<>valoralto)do begin
+        read(mae,rmae);
+        nom:=min.nom;
+        tot:=0;
+        cant:=0;
+        while(nom = min.nom)do begin
+            tot:= min.tot + tot;
+            cant:= min.cant +cant;
+            minimo(det1,det2,rdet1,rdet2,min);
+        end;
+        while((not eof(mae))and(rmae.nom<nom))do
+            read(mae,rmae);
+        if(rmae.nom=nom)then begin
+            rmae.tot:= rmae.tot + tot;
+            rmae.cant:= rmae.cant + cant;
             seek(mae,filepos(mae)-1);
             write(mae,rmae);
-            read(mae,rmae)
-        end;
+        end
+        else if(eof(mae))then 
+            rmin.cod:=valoralto;
+            else
+                 seek(mae,filepos(mae)-1);
     end;
     close(mae);
-    for i:= 1 to 30 do 
-        close(rdet[i]);
+    close(rdet1);
+    close(rdet2);
 end;
 
-procedure exportarTXT (var mae:maestro; var texto:text);
-var
-    prod:producto;
-begin
-    reset(mae);
-    rewrite(texto);
-    while(not(eof(mae)))do begin
-        read(mae,prod);
-        if(prod.stock<prod.min)then begin
-            with prod do begin
-                writeln(texto, nom);
-                writeln(texto, des);
-                writeln(texto, stock,' ',pre);
-            end;
-        end;
-    end;
-    close(mae);
-    close(texto);
-end;
