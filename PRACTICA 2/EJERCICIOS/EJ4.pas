@@ -34,7 +34,7 @@ end;
 procedure minimo (var det:vdet; var rdet: vreg; var min:info);
 var
     i,j:integer;
-    minimo:integer;
+    codmin:integer;
 begin
     codmin:=999;
     for i:= 1 to 30 do begin
