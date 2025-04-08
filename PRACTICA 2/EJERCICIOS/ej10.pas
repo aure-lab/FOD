@@ -36,7 +36,7 @@ begin
             codLoc:=mesa.codLoc;
             writeln(codLoc);
             loc:=0;
-            while(mesa.codLoc=codLoc)do begin
+            while((mesa.codProv=codProv)  and mesa.codLoc=codLoc)do begin
                 loc:=loc+mesa.cant;
                 leer(arch,mesa);
             end;
