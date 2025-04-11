@@ -63,9 +63,7 @@ end;
 
 procedure buscarCursada (var det:detallecursada; var rdet:cursadas; var cursadas:integer; codAlum:integer);
 begin
-    cursadas:=0;
-    while(rdet.codAlum=codAlum) do begin
-        leerCursada(det,rdet);                
+    cursadas:=0;               
     while((rdet.codAlum=codAlum)) do begin
         if(det.resul)then
             cursadas:= cursadas+1;
@@ -76,8 +74,6 @@ end;
 procedure buscarFinal (var det:detalleFinal; var rdet:finales; var finales:integer; codAlum:integer);
 begin
     finales:=0;
-    while(rdet.codAlum<codAlum) do
-        leerFinal(det,rdet);
     while(rdet.codAlum=codAlum)do begin
         if(rdet.nota>=4)then
             finales:= finales + 1;

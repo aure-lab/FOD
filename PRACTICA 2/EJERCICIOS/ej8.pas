@@ -58,16 +58,14 @@ begin
     end;
     reset(mae);
     minimo(det,rdet,min);
-    while(min.cod<>valoralto)do
-        read(mae,rmae);
+    read(mae,rmae);
+    while(not eof(mae))do begin
         total:=0;
-        cod:= min.cod;
+        cod:= mae.cod;
         while(min.cod = cod)do begin
             total:= total + min.cantKg;
             minimo(det,rdet,min);
         end;
-        while(rmae.cod<>cod)do
-            read(mae,rmae);
         rmae.cantKg:= rmae.cantKg + total;
         if(rmae.cantKg>10000)then begin
             writeln('la provincia',rmae.nom, ' nro ', rmae.cod,' ha consumido mas de 10000 kg historicamente');
@@ -75,4 +73,6 @@ begin
         end;
         seek(mae, filepos(mae)-1);
         write(mae, rmae);
+        read(mae,rmae);
+    end;
 end;

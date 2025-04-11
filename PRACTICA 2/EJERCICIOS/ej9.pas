@@ -42,18 +42,19 @@ begin
         tot:=0;
         cod:= rmae.cli.cod;
         while(cod = rmae.cli.cod)do begin
-            mes:= rmae.mes;
             anio:= rmae.anio;
-            totmes:=0;
-            while((cod = rmae.cli.cod)and(anio = rmae.anio)and(mes = rmae.mes))do begin
-                totmes:= totmes + rmae.monto;
-                leer(mae,rmae);
+            while((cod = rmae.cli.cod)and(anio = rmae.anio))do begin
+                totmes:=0;
+                mes:= rmae.mes;
+                while((cod = rmae.cli.cod)and(anio = rmae.anio)and(mes = rmae.mes))do begin
+                    totmes:= totmes + rmae.monto;
+                    leer(mae,rmae);
+                end;
+                tot:= tot+totmes;
+                writeln('-Mes ', rmae.mes,': ',totmes);
             end;
-            tot:= tot+totmes;
-            writeln('-Mes ', rmae.mes,': ',totmes);
-            if((anio<>rmae.anio)or(cod<>rmae.cli.cod))then
-                ventas:= ventas+ tot;
-                writeln('\\\\\\\\\\\\\\\\\\total gastado anualmente: ',tot,'\\\\\\\\\\\\\\\\\\');
+            ventas:= ventas+ tot;
+            writeln('\\\\\\\\\\\\\\\\\\total gastado anualmente: ',tot,'\\\\\\\\\\\\\\\\\\');
         end;
     end;
     writeln('El monto total de las ventas fue de $', ventas,'!');
